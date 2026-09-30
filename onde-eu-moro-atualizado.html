@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Onde eu moro?</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#23305a;--sun:#ffd24a;--bg:#dff1ff;--card:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;font-weight:600;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:clamp(28px,7vw,44px);font-weight:800;margin:4px 0;text-align:center}
+.sub{text-align:center;font-size:clamp(16px,4vw,20px);margin:0 0 12px}
+.stars{text-align:center;font-size:28px;min-height:38px;letter-spacing:4px}
+.zones{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.zone{min-height:170px;border-radius:24px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;border:4px dashed rgba(35,48,90,.35);transition:transform .15s}
+.zone.hot{transform:scale(1.04);border-color:var(--ink)}
+.zone .t{font-size:clamp(18px,4.5vw,26px);font-weight:800}
+.zone .big{font-size:34px}
+.terra{background:#a9e08f}.agua{background:#7cc6ee}.ar{background:#f3ecff}
+.placed{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;font-size:40px}
+.tray{margin-top:16px;background:rgba(255,255,255,.65);border-radius:24px;padding:14px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;min-height:110px}
+.animal{width:84px;height:84px;border-radius:22px;background:var(--card);display:grid;place-items:center;font-size:52px;box-shadow:0 5px 0 rgba(35,48,90,.25);cursor:grab;touch-action:none}
+.animal.drag{position:fixed;z-index:9;pointer-events:none;transform:scale(1.15) rotate(-6deg);box-shadow:0 12px 20px rgba(35,48,90,.3)}
+.animal.no{animation:no .35s}
+@keyframes no{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.msg{text-align:center;font-size:clamp(20px,5vw,28px);font-weight:800;min-height:40px;margin-top:10px}
+button{font:inherit;font-weight:800;font-size:22px;background:var(--sun);color:var(--ink);border:0;border-radius:999px;padding:10px 28px;box-shadow:0 5px 0 #c99a10;cursor:pointer;display:none;margin:12px auto 0}
+button:focus-visible,.animal:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+  .fase{text-align:center;font-size:clamp(20px,5vw,28px);font-weight:800;background:var(--sun);width:max-content;margin:0 auto 6px;padding:2px 22px;border-radius:999px}
+.nome{margin:0 0 12px;min-height:118px;background:#fff;border-radius:28px;box-shadow:0 6px 0 rgba(35,48,90,.2);display:flex;align-items:center;justify-content:center;padding:8px 14px;text-align:center}
+.nome .dica{font-size:clamp(18px,4.5vw,24px);opacity:.7}
+.nome .pop{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0 2px;animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.nome .em{font-size:clamp(44px,11vw,72px);margin-right:12px}
+.nome b{font-size:clamp(46px,13vw,88px);font-weight:800;line-height:1.1;letter-spacing:2px;-webkit-text-stroke:6px #fff;paint-order:stroke fill;text-shadow:0 5px 0 rgba(35,48,90,.28)}
+@keyframes pop{from{transform:scale(.4) rotate(-5deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.nome .pop{animation:none}}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:10;pointer-events:none;opacity:0;transition:opacity .6s;background:rgba(15,20,50,.62)}
+#fx.on{opacity:1}
+button{position:relative;z-index:20}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#dff1ff}}
+#soundTest{display:block;font-size:16px;padding:6px 18px;margin:8px auto 6px}
+.sound-status{text-align:center;font-size:14px;margin:0 0 10px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Onde eu moro?</h1>
+  <p class="sub">Arraste cada bicho para a casa dele.</p>
+  <button id="soundTest" type="button">🔊 Testar som</button>
+  <p id="soundStatus" class="sound-status" role="status" aria-live="polite"></p>
+  <div class="fase" id="fase"></div>
+  <div class="stars" id="stars" aria-live="polite"></div>
+  <div class="nome" id="nome" aria-live="polite"></div>
+  <div class="zones">
+    <div class="zone terra" data-z="terra"><span class="big">🌳</span><span class="t">Terra</span><div class="placed"></div></div>
+    <div class="zone agua" data-z="agua"><span class="big">🌊</span><span class="t">Água</span><div class="placed"></div></div>
+    <div class="zone ar" data-z="ar"><span class="big">☁️</span><span class="t">Ar</span><div class="placed"></div></div>
+  </div>
+  <div class="tray" id="tray"></div>
+  <div class="msg" id="msg"></div>
+  <button id="again">Jogar de novo</button>
+</main>
+<canvas id="fx" aria-hidden="true"></canvas>
+<script>
+const LV=[[["🐄","vaca","terra"],["🐟","peixe","agua"],["🦜","papagaio","ar"],["🐘","elefante","terra"],["🐬","golfinho","agua"],["🦋","borboleta","ar"],["🐰","coelho","terra"],["🐙","polvo","agua"],["🦅","águia","ar"]],[["🐴","cavalo","terra"],["🐳","baleia","agua"],["🐦","passarinho","ar"],["🦁","leão","terra"],["🦀","caranguejo","agua"],["🐝","abelha","ar"],["🐒","macaco","terra"],["🦈","tubarão","agua"],["🦉","coruja","ar"]]];
+let lv=0,A=LV[0];
+const tray=document.getElementById("tray"),msg=document.getElementById("msg"),stars=document.getElementById("stars"),again=document.getElementById("again");
+let done=0;
+const synth=window.speechSynthesis,activeUtterances=new Set();
+const soundStatus=document.getElementById("soundStatus");
+let voices=[];
+function loadVoices(){if(synth)voices=synth.getVoices()}
+loadVoices();
+if(synth)synth.addEventListener("voiceschanged",loadVoices);
+function speakText(text,lang="pt-BR",pitch=1,rate=1,end,replace=false){
+  if(!synth||!window.SpeechSynthesisUtterance){soundStatus.textContent="A voz não está disponível neste navegador.";if(end)end();return}
+  try{
+    loadVoices();
+    if(replace&&(synth.speaking||synth.pending))synth.cancel();
+    if(synth.paused)synth.resume();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang;u.pitch=pitch;u.rate=rate;u.volume=1;
+    const normalize=l=>l.toLowerCase().replace("_","-");
+    const voice=voices.find(v=>normalize(v.lang)===normalize(lang))||voices.find(v=>normalize(v.lang).startsWith(lang.slice(0,2)));
+    if(voice)u.voice=voice;
+    activeUtterances.add(u);
+    u.onstart=()=>{soundStatus.textContent="Se não ouvir, aumente o volume e desative o modo silencioso."};
+    u.onend=()=>{activeUtterances.delete(u);if(end)end()};
+    u.onerror=e=>{activeUtterances.delete(u);if(!["canceled","interrupted"].includes(e.error))soundStatus.textContent="Não foi possível reproduzir a voz. Toque em Testar som para tentar novamente.";if(end)end()};
+    synth.speak(u);
+  }catch(e){soundStatus.textContent="Não foi possível reproduzir a voz. Tente abrir no Safari.";if(end)end()}
+}
+function say(t){speakText(t,"pt-BR",1,1,undefined,true)}
+document.getElementById("soundTest").addEventListener("click",()=>{
+  audio();soundStatus.textContent="Teste solicitado. Você deve ouvir uma frase.";say("Olá! Vamos brincar com os animais?");
+});
+const nomeEl=document.getElementById("nome"),CORES=["#ff5a5f","#ff9f1c","#2ec4b6","#3a86ff","#8338ec","#ef476f"];
+function dica(){nomeEl.innerHTML='<span class="dica">👆 Toque em um bicho para ver o nome</span>'}
+function mostra(el){ // nome grande e colorido, letra por letra
+  const w=document.createElement("span");w.className="pop";
+  w.innerHTML='<span class="em">'+el.textContent+'</span>'+[...el.dataset.n.toUpperCase()].map((c,i)=>'<b style="color:'+CORES[i%CORES.length]+'">'+c+'</b>').join("");
+  nomeEl.innerHTML="";nomeEl.appendChild(w);
+}
+function setup(){
+  dica();
+  stopFx();A=LV[lv];document.getElementById("fase").textContent="Fase "+(lv+1)+" de "+LV.length;
+  done=0;msg.textContent="";stars.textContent="";again.style.display="none";tray.innerHTML="";
+  document.querySelectorAll(".placed").forEach(p=>p.innerHTML="");
+  [...A].sort(()=>Math.random()-.5).forEach(([e,n,z])=>{
+    const d=document.createElement("div");d.className="animal";d.textContent=e;d.dataset.z=z;d.dataset.n=n;d.setAttribute("role","img");d.setAttribute("aria-label",n);
+    d.addEventListener("pointerdown",start);tray.appendChild(d);
+  });
+}
+function start(ev){
+  if(ev.isPrimary===false||ev.button>0)return;
+  const speakOnRelease=ev.pointerType!=="mouse";
+  if(!speakOnRelease)audio();
+  const el=ev.currentTarget,r=el.getBoundingClientRect(),ox=ev.clientX-r.left,oy=ev.clientY-r.top;
+  const ph=document.createElement("div");ph.style.cssText="width:84px;height:84px";el.after(ph);
+  el.classList.add("drag");el.style.left=r.left+"px";el.style.top=r.top+"px";document.body.appendChild(el);
+  mostra(el);if(!speakOnRelease)say(el.dataset.n);let hot=null;
+  const zoneAt=(x,y)=>{el.style.visibility="hidden";const t=document.elementFromPoint(x,y);el.style.visibility="";return t&&t.closest(".zone")};
+  const mv=e=>{el.style.left=e.clientX-ox+"px";el.style.top=e.clientY-oy+"px";const z=zoneAt(e.clientX,e.clientY);if(hot&&hot!==z)hot.classList.remove("hot");if(z)z.classList.add("hot");hot=z};
+  const up=e=>{
+    if(e.pointerId!==ev.pointerId)return;
+    const cancelled=e.type==="pointercancel";
+    if(!cancelled)audio();
+    removeEventListener("pointermove",mv);removeEventListener("pointerup",up);removeEventListener("pointercancel",up);
+    const z=cancelled?null:zoneAt(e.clientX,e.clientY);if(hot)hot.classList.remove("hot");
+    el.classList.remove("drag");el.style.left=el.style.top="";
+    if(z&&z.dataset.z===el.dataset.z){
+      ph.remove();el.style.cssText="width:auto;height:auto;background:none;box-shadow:none;font-size:40px;cursor:default;touch-action:auto";
+      z.querySelector(".placed").appendChild(el);el.removeEventListener("pointerdown",start);el.addEventListener("click",()=>{audio();mostra(el);say(el.dataset.n)});
+      done++;stars.textContent="⭐".repeat(done);msg.textContent=["Muito bem!","Isso mesmo!","Acertou!","Uau!"][done%4];say(msg.textContent);
+      if(done===A.length){msg.textContent="Parabéns! Você acertou todos! 🎉";fimFase()}
+    }else{
+      ph.replaceWith(el);el.classList.add("no");setTimeout(()=>el.classList.remove("no"),400);
+      if(z){msg.textContent="Tente outra casa!";say("Tente outra casa")}
+      else if(speakOnRelease&&!cancelled)say(el.dataset.n);
+    }
+  };
+  addEventListener("pointermove",mv);addEventListener("pointerup",up);addEventListener("pointercancel",up);
+}
+
+function fimFase(){const ult=lv===LV.length-1;again.textContent=ult?"Jogar tudo de novo":"Ir para a Fase "+(lv+2)+" 🚀";again.style.display="block";if(ult)msg.textContent="Você terminou todas as fases! 🏆";celebrate(ult)}
+/* ===== Festa da vitória: fogos + aplausos + "yeah!" ===== */
+const cv=document.getElementById("fx"),cx=cv.getContext("2d");
+let snd=false,AC=null,P=[],R=[],fxRun=false,fxT=0,fxEnd=0,timers=[];
+function audio(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state!=="running")AC.resume().catch(()=>{})}catch(e){}}
+function fit(){cv.width=innerWidth;cv.height=innerHeight}
+addEventListener("resize",fit);fit();
+
+function applause(sec){ // aplausos sintetizados: ruído com estalos aleatórios
+  if(!AC)return;const sr=AC.sampleRate,n=sr*sec,b=AC.createBuffer(1,n,sr),d=b.getChannelData(0);let e=0;
+  for(let i=0;i<n;i++){if(Math.random()<.0012)e=1;e*=.9992;const t=i/n,f=Math.min(1,t*8,(1-t)*3);d[i]=(Math.random()*2-1)*e*f}
+  const s=AC.createBufferSource(),bp=AC.createBiquadFilter(),g=AC.createGain();
+  s.buffer=b;bp.type="bandpass";bp.frequency.value=2200;bp.Q.value=.6;g.gain.value=1.6;
+  s.connect(bp);bp.connect(g);g.connect(AC.destination);s.start();
+}
+function boom(){ // estouro grave de cada fogo
+  if(!AC||!snd)return;const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;
+  o.type="sine";o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(40,t+.25);
+  g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);
+  o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.3);
+}
+function fala(txt,lang,pitch,rate,fim){speakText(txt,lang,pitch,rate,fim)}
+function yeah(){try{fala("Yeah! Yeah!","en-US",2,1.15);fala("Yeah!","en-US",2,1.2)}catch(e){}}
+function launch(){R.push({x:cv.width*(.15+Math.random()*.7),y:cv.height,vy:-(cv.height/60)*(.9+Math.random()*.4),ty:cv.height*(.15+Math.random()*.35),h:Math.random()*360})}
+function burst(x,y,h){
+  boom();for(let i=0;i<70;i++){const a=Math.random()*6.283,v=1.5+Math.random()*5;
+    P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,h:h+Math.random()*40})}
+}
+function frame(t){
+  if(!fxRun)return;
+  cx.globalCompositeOperation="destination-out";cx.fillStyle="rgba(0,0,0,.22)";cx.fillRect(0,0,cv.width,cv.height);
+  cx.globalCompositeOperation="lighter";
+  if(t<fxEnd-1500&&t-fxT>320){launch();if(Math.random()<.5)launch();fxT=t}
+  R=R.filter(r=>{r.y+=r.vy;cx.fillStyle=`hsl(${r.h},100%,70%)`;cx.fillRect(r.x-2,r.y,4,10);
+    if(r.y<=r.ty){burst(r.x,r.y,r.h);return false}return true});
+  P=P.filter(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.vx*=.985;p.l-=.013;
+    cx.fillStyle=`hsla(${p.h},100%,65%,${Math.max(p.l,0)})`;cx.beginPath();cx.arc(p.x,p.y,2.6,0,6.283);cx.fill();return p.l>0});
+  cx.globalCompositeOperation="source-over";cx.textAlign="center";cx.fillStyle="#ffd24a";
+  const k=1+.06*Math.sin(t/180);cx.font=`800 ${Math.min(cv.width*.13,110)*k}px "Baloo 2",sans-serif`;
+  cx.fillText("Parabéns!",cv.width/2,cv.height*.5);
+  if(t>fxEnd&&!P.length&&!R.length){stopFx();return}
+  requestAnimationFrame(frame);
+}
+function celebrate(ult){
+  fit();fxRun=true;P=[];R=[];fxT=0;snd=false;fxEnd=performance.now()+11000;cv.classList.add("on");
+  audio();requestAnimationFrame(frame);
+  let ok=false;
+  const depois=()=>{if(ok||!fxRun)return;ok=true;snd=true;applause(7);yeah()}; // sons dos fogos só depois da fala
+  try{speechSynthesis.cancel();fala(ult?"Parabéns! Você terminou todas as fases!":"Parabéns! Você conseguiu!","pt-BR",1.8,1.05,depois)}catch(e){depois()}
+  setTimeout(depois,4500); // garantia, caso o navegador não avise o fim da fala
+}
+function stopFx(){fxRun=false;snd=false;cv.classList.remove("on");cx.clearRect(0,0,cv.width,cv.height);P=[];R=[];try{speechSynthesis.cancel()}catch(e){}}
+
+again.onclick=()=>{lv=lv<LV.length-1?lv+1:0;setup()};setup();
+</script>
+</body>
+</html>
