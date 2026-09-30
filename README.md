@@ -5,7 +5,7 @@ Projeto com uma página inicial de categorias e jogos educativos para crianças.
 ## 📁 Estrutura do projeto
 
 - `index.html` — página inicial com a categoria de jogos
-- `onde-eu-moro-atualizado.html` — jogo principal da categoria Animais
+- `onde-eu-moro.html` — jogo principal da categoria Animais
 - `.gitignore` — arquivos ignorados pelo Git
 
 ## 🎯 Página inicial
