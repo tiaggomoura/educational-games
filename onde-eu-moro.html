@@ -43,12 +43,17 @@ button{position:relative;z-index:20}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#dff1ff}}
 #soundTest{display:block;font-size:16px;padding:6px 18px;margin:8px auto 6px}
 .sound-status{text-align:center;font-size:14px;margin:0 0 10px}
+.brand-icons{display:inline-flex;vertical-align:middle;align-items:center;gap:3px;margin-right:5px}
+.brand-icons img{width:20px;height:20px;object-fit:cover;border:1px solid white;box-shadow:0 1px 3px #7693a5;border-radius:50%}
+.brand-icons img+img{border-radius:5px}
+.instagram-mini{color:#b52e72;font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
+.instagram-mini:focus-visible{outline:2px solid #265fb7;outline-offset:2px;border-radius:3px}
 </style>
 </head>
 <body>
 <main>
-  <h1>Onde eu moro?</h1>
-  <p class="sub">Arraste cada bicho para a casa dele.</p>
+  <h1><span class="brand-icons"><img src="imagens/avatar.jpg" alt=""><img src="imagens/logo-falatea.png" alt=""></span>Onde eu moro?</h1>
+  <p class="sub">Arraste cada bicho para a casa dele. <a class="instagram-mini" href="https://www.instagram.com/falatea.ia" target="_blank" rel="noopener noreferrer">@falatea.ia</a></p>
   <button id="soundTest" type="button">🔊 Testar som</button>
   <p id="soundStatus" class="sound-status" role="status" aria-live="polite"></p>
   <div class="fase" id="fase"></div>

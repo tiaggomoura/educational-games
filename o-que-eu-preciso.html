@@ -59,9 +59,14 @@ main.wrong-answer-shake{animation:wrongAnswerShake .38s ease-out}
 }
 body.calm main.wrong-answer-shake{animation:none}
 @media(prefers-reduced-motion:reduce){main.wrong-answer-shake{animation:none}}
+.brand-icons{display:inline-flex;vertical-align:middle;align-items:center;gap:3px;margin-right:5px}
+.brand-icons img{width:19px;height:19px;object-fit:cover;border:1px solid white;box-shadow:0 1px 3px #7693a5;border-radius:50%}
+.brand-icons img+img{border-radius:5px}
+.instagram-mini{color:#b52e72;font-size:11px;font-weight:800;text-decoration:none;white-space:nowrap}
+.instagram-mini:focus-visible{outline:2px solid #265fb7;outline-offset:2px;border-radius:3px}
 </style>
 </head><body><main>
-<header><div><p class="eyebrow">DESCOBRIR • ESCOLHER • BRINCAR</p><h1>O que eu preciso?</h1><p>Vamos cuidar do nosso dia?</p></div><div class="settings"><button id="sound" class="control" aria-label="Ativar som" aria-pressed="true"><span class="settings-text">Som</span></button><button id="motion" class="control" aria-label="Ativar modo sem animações" aria-pressed="false"><span class="settings-text">Calmo</span></button></div></header>
+<header><div><p class="eyebrow">DESCOBRIR • ESCOLHER • BRINCAR</p><h1><span class="brand-icons"><img src="imagens/avatar.jpg" alt=""><img src="imagens/logo-falatea.png" alt=""></span>O que eu preciso?</h1><p>Vamos cuidar do nosso dia? <a class="instagram-mini" href="https://www.instagram.com/falatea.ia" target="_blank" rel="noopener noreferrer">@falatea.ia</a></p></div><div class="settings"><button id="sound" class="control" aria-label="Ativar som" aria-pressed="true"><span class="settings-text">Som</span></button><button id="motion" class="control" aria-label="Ativar modo sem animações" aria-pressed="false"><span class="settings-text">Calmo</span></button></div></header>
 <div class="progress"><button id="phase" class="pill" type="button"></button><button id="stars" class="star-progress" type="button" aria-label="Ouvir conquistas"></button></div>
 <nav id="steps" aria-label="Escolher atividade"></nav>
 <section id="game" class="game" aria-label="Área do jogo"><div class="question"><h2><button id="question" type="button"></button></h2><button id="listen" class="repeat" aria-label="Ouvir a pergunta"></button></div><button id="scene" class="scene" aria-label="Escolha um objeto e toque aqui"><div id="art" class="art" role="img"></div><img id="actionGif" class="action-gif" alt="" hidden><span id="caption" class="scene-caption">Escolha um objeto para ajudar.</span></button><button id="word" type="button" class="word" aria-live="polite">O que vamos usar?</button><div id="choices" class="choices" role="group" aria-label="Objetos para escolher"></div><button id="message" type="button" class="message" aria-live="polite">Escolha uma figura. Depois, toque no menino.</button></section>
