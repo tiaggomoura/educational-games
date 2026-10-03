@@ -1,17 +1,17 @@
 # Jogos Educacionais
 
-Projeto com uma página inicial de categorias e jogos educativos para crianças.
+Projeto com uma homepage do Fala TEA e jogos educativos para crianças.
 
 ## 📁 Estrutura do projeto
 
-- `index.html` — página inicial com a categoria de jogos
+- `index.html` — homepage do Fala TEA
+- `educational-games.html` — página secundária com categorias de jogos educativos
 - `onde-eu-moro.html` — jogo principal da categoria Animais
 - `.gitignore` — arquivos ignorados pelo Git
 
 ## 🎯 Página inicial
 
-A página inicial tem o título **Jogos Educacionais** e uma categoria chamada **Animais**.
-Ao clicar na categoria, ela expande e mostra o link para acessar:
+A página **Jogos Educacionais** tem categorias que podem ser expandidas para acessar os jogos, incluindo:
 
 - **Onde eu Moro?**
 
