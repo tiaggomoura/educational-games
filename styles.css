@@ -118,6 +118,7 @@ h2 { margin: 0; color: var(--blue-dark); font-size: clamp(2rem, 4vw, 3.1rem); fo
 .game-art img { position: absolute; right: -8px; bottom: -32px; width: 65%; height: 245px; border-radius: 50% 50% 0 0; object-fit: cover; object-position: center 22%; mix-blend-mode: multiply; }
 .game-card-sky .game-art { background: linear-gradient(135deg,#a8e3ff,#d9f4ff); }.game-card-yellow .game-art { background: linear-gradient(135deg,#ffe08a,#fff0bc); }.game-card-mint .game-art { background: linear-gradient(135deg,#8be3c4,#dbfaed); }
 .game-card-coral .game-art { background: linear-gradient(135deg,#ffb7a2,#ffe1d8); }
+.game-card-domino .game-art { background: linear-gradient(135deg,#f7d9a8,#fff0cb); }
 .game-icon { position: absolute; z-index: 2; top: 35px; left: 34px; display: grid; width: 58px; height: 58px; place-items: center; border: 4px solid rgba(255,255,255,.75); border-radius: 20px; background: white; box-shadow: 0 8px 15px rgba(30,70,100,.1); font-size: 1.8rem; transform: rotate(-7deg); }
 .game-art-wants .game-icon { transform: rotate(7deg); }.game-art-needs .game-icon { transform: rotate(-3deg); }
 .art-label { position: absolute; z-index: 3; bottom: 20px; left: 20px; max-width: 52%; padding: 7px 12px; border: 2px solid rgba(255,255,255,.7); border-radius: 999px; background: rgba(255,255,255,.91); color: var(--blue-dark); font-size: .77rem; font-weight: 900; }

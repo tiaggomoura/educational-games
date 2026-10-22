@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://falatea.com.br/sitemap.xml
