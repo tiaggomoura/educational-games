@@ -29,4 +29,13 @@ body.editorial{margin:0;background:#fff;color:var(--editorial-ink);font:17px/1.7
 .editorial-footer nav{display:flex;flex-wrap:wrap;gap:16px}
 .editorial-footer a{color:inherit}
 .source-list li{margin:.65em 0;overflow-wrap:anywhere}
+.game-resource{margin:28px auto 0;padding:34px 18px;background:#f8fbfd;border-top:1px solid var(--editorial-line);color:var(--editorial-ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;user-select:text;-webkit-user-select:text}
+.game-resource-inner{width:min(100%,900px);margin:auto}
+.game-resource h2{margin:.35em 0 .5em;color:var(--editorial-ink);font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.2}
+.game-resource h3{margin:1.5em 0 .35em;font-size:1.15rem}
+.game-resource p,.game-resource li{max-width:72ch}
+.game-resource ul{padding-left:1.4em}
+.game-resource-kicker{margin:0;color:var(--editorial-blue);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.game-resource-note{padding:14px 18px;border-left:4px solid var(--editorial-blue);background:#eef6fc}
+.game-resource a{color:#075da3;text-decoration:underline;text-underline-offset:2px}
 @media(max-width:600px){.editorial-header-inner{align-items:flex-start;flex-direction:column;justify-content:center;padding-block:14px}.editorial-nav{gap:8px 14px}.editorial-main{padding-top:34px}.editorial-footer-inner{display:block}.editorial-footer nav{margin-top:10px}}
